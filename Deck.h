@@ -1,39 +1,44 @@
 #include "main.h"
 
-//main.h¿¡ ¼±¾ğµÈ °úÀÏ Ä«µå¸¦ »ç¿ëÇÏ¿© ·£´ıÇÏ°Ô ¼¯Àº ÈÄ list¿¡ ÀúÀåÇÏ´Â class
+//main.hì— ì„ ì–¸ëœ ê³¼ì¼ ì¹´ë“œë¥¼ ì‚¬ìš©í•˜ì—¬ ëœë¤í•˜ê²Œ ì„ì€ í›„ listì— ì €ì¥í•˜ëŠ” class
 
 class Deck {
-public :
+public:
 	Deck() {
-		realSetCard(); // Àü¿ªº¯¼ö Ä«µå ¹è¿­ °ª ¼³Á¤
-		setDeck_Card(); //´Ù¸®¾Æ ±¸Çö
-		shuffle_Deck_Card(); // ´Ù¸®¾Æ ±¸Çö
+		realSetCard(); // ì „ì—­ë³€ìˆ˜ ì¹´ë“œ ë°°ì—´ ê°’ ì„¤ì •
+		setDeck_Card(); //ë‹¤ë¦¬ì•„ êµ¬í˜„
+		shuffle_Deck_Card(); // ë‹¤ë¦¬ì•„ êµ¬í˜„
 
-		//Deck_Card °ªÀ» list·Î ¸¸µå´Â ÄÚµå
+		//Deck_Card ê°’ì„ listë¡œ ë§Œë“œëŠ” ì½”ë“œ
 		for (Card a : deck_Card) {
 			deck_List.push_back(a);
 		}
 	}
 	~Deck() { deck_List.clear(); }
 
-	void setDeck_Card() {
-		//°úÀÏ Ä«µåµéÀ» deck_Card¿¡ ºÙ¿©¼­ ³Ö±â
-	}
-	void shuffle_Deck_Card() {
-		//Deck_CardµéÀÇ ¹è¿­À» ·£´ıÇÏ°Ô ¼¯±â
-	}
-	list<Card> giveCardToPlayer() {
-		//ÇÃ·¹ÀÌ¾î¿¡°Ô Á¦°øÇÒ Ä«µå 14Àå list¸¦ ¸®ÅÏÇÏ´Â ¸Ş¼Òµå
-		//ÁÙ ¶§¸¶´Ù µ¦¿¡¼­ 14Àå Á¦°ÅÇØ¾ß µÈ´Ù.
+	void insertCard(Card c) {	// ì¹´ë“œë¥¼ ë±ì— ë„£ê¸° (ì¶”ê°€ëœ ë¶€ë¶„)
+		deck_List.push_back(c);
 	}
 
-	//deck¿¡ ¼¯¿© ÀÖ´Â Ä«µå º¸±â
+	void setDeck_Card() {
+		//ê³¼ì¼ ì¹´ë“œë“¤ì„ deck_Cardì— ë¶™ì—¬ì„œ ë„£ê¸°
+	}
+	void shuffle_Deck_Card() {
+		//Deck_Cardë“¤ì˜ ë°°ì—´ì„ ëœë¤í•˜ê²Œ ì„ê¸°
+	}
+	list<Card> giveCardToPlayer() {
+		//í”Œë ˆì´ì–´ì—ê²Œ ì œê³µí•  ì¹´ë“œ 14ì¥ listë¥¼ ë¦¬í„´í•˜ëŠ” ë©”ì†Œë“œ
+		//ì¤„ ë•Œë§ˆë‹¤ ë±ì—ì„œ 14ì¥ ì œê±°í•´ì•¼ ëœë‹¤.
+	}
+
+	//deckì— ì„ì—¬ ìˆëŠ” ì¹´ë“œ ë³´ê¸°
 	void printAllCard() {
 		for (iter1 = deck_List.begin(); iter1 != deck_List.end(); iter1++) {
 			cout << (*iter1).fruit << " " << (*iter1).number << endl;
 		}
 	}
-private : 
+
+private:
 	Card deck_Card[56];
 	list<Card>deck_List;
 	list<Card>::iterator iter1;
