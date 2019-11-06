@@ -46,10 +46,11 @@ bool playerInput(bool match, Player p) {
 	//만일 2초 안에 player가 입력을 했다면 true리턴
 	//2초가 넘아갈 동안 입력 x 시 false 리턴
 	clock_t endwait;
-	endwait = clock() + COMPUTERWAIT * CLOCKS_PER_SEC;
+	endwaitT = clock() + COMPUTERWAIT * CLOCKS_PER_SEC;
+	endwaitF = clock() + (COMPUTERWAIT + 1)*CLOCKS_PER_SEC;
 	if (match == true)
 	{
-		while (clock()<endwait)
+		while (clock()<endwaitT)
 		{
 			if (kbhit())
 			{
@@ -60,7 +61,7 @@ bool playerInput(bool match, Player p) {
 	}
 	else
 	{
-		while (clock()<endwait)
+		while (clock()<endwaitF)
 		{
 			if (kbhit())
 				return true;
