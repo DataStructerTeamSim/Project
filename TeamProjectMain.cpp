@@ -6,42 +6,52 @@ bool playerInput(bool match);
 
 
 int main() {
-	//µ¦ ¼ÅÇÃ
+	//ë± ì…”í”Œ
 	Deck d = Deck();
-	//ÇÃ·¹ÀÌ¾î »ı¼º -> »ç¿ëÀÚ´Â player 0;
-	Player p[4];
+	//í”Œë ˆì´ì–´ ìƒì„± -> ì‚¬ìš©ìëŠ” player 0;
+	Player p[4]; //ë°°ì—´ì´ ì•„ë‹Œ ëŒì•„ê°€ëŠ” ë¦¬ìŠ¤íŠ¸ ì²˜ë¦¬ vectorìƒê° ì¤‘ 
 
-	//µ¦ Á¦°ø
+	//ë± ì œê³µ
 	for (int i = 0; i < 4; i++) {
 		p[i].setMyDeck(d.giveCardToPlayer());
 	}
 
 	int i = 0;
-	//°ÔÀÓ ½ÃÀÛ
-	while (1) {//ÀüÃ¼ÀûÀÎ °ÔÀÓ ÁøÇà - ÇÃ·¡ÀÌ¾îÀÇ ½ÂÆĞ °áÁ¤
-		bool judge1 = false;
-		bool judge2 = false;
+	//ê²Œì„ ì‹œì‘
+	while (1) {//ì „ì²´ì ì¸ ê²Œì„ ì§„í–‰ - í”Œë˜ì´ì–´ì˜ ìŠ¹íŒ¨ ê²°ì •
+		bool numbermatch = false;
+		bool playerinput = false;
 		list<Card> onTable;
-		do{//ÇÃ·¹ÀÌ¾î¿¡°Ô ÅÏÀ» Á¦°ø
+		do{//í”Œë ˆì´ì–´ì—ê²Œ í„´ì„ ì œê³µ
 			giveTurnToPlayer(p[i], onTable);
-			judge1 = numberMatch(onTable);
-			judge2 = playerInput(judge1);
-		} while (!judge1 || !judge2);
+			numbermatch = numberMatch(onTable);
+			playerinput = playerInput(judge1);
+		} while (!numbermatch && !playerinput);
+		// *ë„˜ë²„ëŠ” ë§ì•˜ëŠ”ë° í”Œë ˆì´ì–´ ì¸í’‹ì´ ì—†ì„ ê²½ìš°
+		//ëœë¤ ë³€ìˆ˜ë¥¼ í™œìš©í•˜ì—¬ í”Œë ˆì´ì–´ë¥¼ ì œì™¸í•œ ì»´í“¨í„° ìŠ¹ì ê²°ì • í›„ ìŠ¹ìì—ê²Œ onTableì¹´ë“œ ì£¼ê¸°
+		
+		// *ë„˜ë²„ê°€ í‹€ë ·ëŠ”ë° í”Œë ˆì´ì–´ ì¸í’‹ì´ ìˆì„ ê²½ìš°
+		//í”Œë˜ì´ì–´ì— oppsí•¨ìˆ˜ ì‚¬ìš©í•´ì„œ ì»´í“¨í„°ì—ê²Œ í•œ ì¥ì”© ì£¼ê¸°
+		
+		// * ë„˜ë²„ë„ ë§ê³  í”Œë ˆì´ì–´ë„ ì¸í’‹ë„ ìˆì„ ê²½ìš°
+		//í”Œë ˆì´ì–´ì— onTable ë¦¬ìŠ¤íŠ¸ ì£¼ê¸°
+		
+		
 	}
 	return 0;
 }
 void giveTurnToPlayer(Player& player, list<Card>& onTable) {
-	//ÇÃ·¹ÀÌ¾î¿¡°Ô turnÀ» ÁÖ°í frontÄ«µå¸¦ onTable¿¡ ³Ö±â
+	//í”Œë ˆì´ì–´ì—ê²Œ turnì„ ì£¼ê³  frontì¹´ë“œë¥¼ onTableì— ë„£ê¸°
 }
 bool numberMatch(const list<Card>& onTable) {
-	//onTable¿¡ ÀÖ´Â Ä«µåµéÀÇ fruit¿Í number¸¦ ¸ÅÄ¡ÇÏ¿© °°Àº fruitÀÇ numberÇÕÀÌ 5¸é true¸®ÅÏ
-	//¾øÀ¸¸é false
+	//onTableì— ìˆëŠ” ì¹´ë“œë“¤ì˜ fruitì™€ numberë¥¼ ë§¤ì¹˜í•˜ì—¬ ê°™ì€ fruitì˜ numberí•©ì´ 5ë©´ trueë¦¬í„´
+	//ì—†ìœ¼ë©´ false
 }
 bool playerInput(bool match) {
-	//playerÀÇ cinÀ» ¹ŞÀ½
-	//match°¡ trueÀÏ °æ¿ì COMPUTERWAiT ÃÊ ¸¸Å­ ÀÔ·Â´ë±â½Ã°£ ¹ŞÀ½
-	//true¸¦ ¸®ÅÏ
-	//match°¡ falseÀÏ °æ¿ì 2ÃÊ¸¸Å­ ´ë±â
-	//¸¸ÀÏ 2ÃÊ ¾È¿¡ player°¡ ÀÔ·ÂÀ» Çß´Ù¸é true¸®ÅÏ
-	//2ÃÊ°¡ ³Ñ¾Æ°¥ µ¿¾È ÀÔ·Â x ½Ã false ¸®ÅÏ
+	//playerì˜ cinì„ ë°›ìŒ
+	//matchê°€ trueì¼ ê²½ìš° COMPUTERWAiT ì´ˆ ë§Œí¼ ì…ë ¥ëŒ€ê¸°ì‹œê°„ ë°›ìŒ
+	//trueë¥¼ ë¦¬í„´
+	//matchê°€ falseì¼ ê²½ìš° 2ì´ˆë§Œí¼ ëŒ€ê¸°
+	//ë§Œì¼ 2ì´ˆ ì•ˆì— playerê°€ ì…ë ¥ì„ í–ˆë‹¤ë©´ trueë¦¬í„´
+	//2ì´ˆê°€ ë„˜ì•„ê°ˆ ë™ì•ˆ ì…ë ¥ x ì‹œ false ë¦¬í„´
 }
