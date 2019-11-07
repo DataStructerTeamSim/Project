@@ -23,7 +23,7 @@ public:
 		return this->frontCard;
 	}
 
-	void myTurn(Deck *d) {
+	void myTurn() {
 		// myDeck에서 카드 1장을 가져와서 frontCard에 넣는 기능
 		// 1장 가져올 때 덱이 비었는지 확인하고 비어있으면 아무것도 하지 않는다
 		// 가져올 경우 myDeck에서 가져온 카드를 pop한다.
@@ -45,7 +45,7 @@ public:
 
 		this->myDeck.erase(i);
 
-		d->insertCard(myCard);		// 덱에 나의 맨 앞 카드 붙임
+		frontCard = myCard;	// 덱에 나의 맨 앞 카드 붙임
 
 	}
 
