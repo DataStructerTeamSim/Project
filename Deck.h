@@ -1,42 +1,51 @@
-#include "main.h"
+#include <iostream>
+#include <list>
+#include <vector>
+#include <time.h>
 
-//main.h에 선언된 과일 카드를 사용하여 랜덤하게 섞은 후 list에 저장하는 class
+#define COMPUTERNUM 3
+#define GRAPE 0 
+#define STRAWBERRY 1
+#define BANANA 2
+#define APPLE 3
+#define COMPUTERWAIT 1
+// 과일 정의
+using namespace std;
 
-class Deck {
-public:
-	Deck() {
-		realSetCard(); // 전역변수 카드 배열 값 설정
-		setDeck_Card(); //다리아 구현
-		shuffle_Deck_Card(); // 다리아 구현
+//카드 struct 정의, fruit => 과일의 정보 | number => 과일의 개수
+typedef struct __Card {
+	int fruit;
+	int number;
+}Card;
 
-		//Deck_Card 값을 list로 만드는 코드
-		for (Card a : deck_Card) {
-			deck_List.push_back(a);
-		}
-	}
-	~Deck() { deck_List.clear(); }
+//과일마다 카드값 저장하는 배열
+Card grape[14]; Card strawberry[14]; Card banana[14]; Card apple[14];
 
-	void insertCard(Card c) {	// 카드를 덱에 넣기 (추가된 부분)
-		deck_List.push_back(c);
+//카드 설정, 해당 카드에 1:5개, 2:3개, 3:3개, 4:2개, 5:1개씩 number에 할당하는 메소드
+void setCard(Card *card, int fruitType) {
+	for (int i = 0; i < 14; i++) {
+		card[i].fruit = fruitType;
+		if (i < 5)
+			card[i].number = 1;
+		else if (i >= 5 && i < 8)
+			card[i].number = 2;
+		else if (i >= 8 && i < 11)
+			card[i].number = 3;
+		else if (i >= 11 && i < 13)
+			card[i].number = 4;
+		else
+			card[i].number = 5;
 	}
+}
 
-	void setDeck_Card() {
-		//과일 카드들을 deck_Card에 붙여서 넣기
-	}
-	void shuffle_Deck_Card() {
-		//Deck_Card들의 배열을 랜덤하게 섞기
-	}
-	list<Card> giveCardToPlayer() {
-		//플레이어에게 제공할 카드 14장 list를 리턴하는 메소드
-		//줄 때마다 덱에서 14장 제거해야 된다.
-	}
+//모든 과일카드에 숫자 및 과일 할당 메소드
+void realSetCard() {
+	setCard(grape, GRAPE);
+	setCard(strawberry, STRAWBERRY);
+	setCard(banana, BANANA);
+	setCard(apple, APPLE);
+}
 
-	//deck에 섞여 있는 카드 보기
-	void printAllCard() {
-		for (iter1 = deck_List.begin(); iter1 != deck_List.end(); iter1++) {
-			cout << (*iter1).fruit << " " << (*iter1).number << endl;
-		}
-	}
 
 private:
 	Card deck_Card[56];
