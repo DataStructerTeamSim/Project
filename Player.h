@@ -5,30 +5,55 @@ public:
 	Player() {}
 	~Player() { myDeck.clear(); }
 	void setMyDeck(const list<Card>& recive_From_Deck) {
-		//recive_From_Deck¿¡¼­ ¹ŞÀº Ä«µå ¹¶Ä¡¸¦ myDeck¿¡ ºÙÀÌ´Â ±â´É
+		//recive_From_Deckì—ì„œ ë°›ì€ ì¹´ë“œ ë­‰ì¹˜ë¥¼ myDeckì— ë¶™ì´ëŠ” ê¸°ëŠ¥
+
+		for (Card i : recive_From_Deck) {
+			this->myDeck.push_back(i);
+		}
+
 	}
 
-	//playerÀÇ µ¦ÀÌ ºñ¾ú´ÂÁö È®ÀÎÇÏ´Â ¸Ş¼Òµå
+	//playerì˜ ë±ì´ ë¹„ì—ˆëŠ”ì§€ í™•ì¸í•˜ëŠ” ë©”ì†Œë“œ
 	bool myDeckEmpty() {
 		return myDeck.empty();
 	}
 
-	//playerÀÇ Ã¹¹øÂ° Ä«µå ¹İÈ¯
+	//playerì˜ ì²«ë²ˆì§¸ ì¹´ë“œ ë°˜í™˜
 	Card show_Front_Card() {
 		return this->frontCard;
 	}
 
-	void myTurn() {
-		//myDeck¿¡¼­ Ä«µå 1ÀåÀ» °¡Á®¿Í¼­ frontCard¿¡ ³Ö´Â ±â´É
-		// 1Àå °¡Á®¿Ã ¶§ µ¦ÀÌ ºñ¾ú´ÂÁö È®ÀÎÇÏ°í ºñ¾îÀÖÀ¸¸é ¾Æ¹«°Íµµ ÇÏÁö ¾Ê´Â´Ù
-		// °¡Á®¿Ã °æ¿ì myDeck¿¡¼­ °¡Á®¿Â Ä«µå¸¦ popÇÑ´Ù.
+	void myTurn(Deck *d) {
+		// myDeckì—ì„œ ì¹´ë“œ 1ì¥ì„ ê°€ì ¸ì™€ì„œ frontCardì— ë„£ëŠ” ê¸°ëŠ¥
+		// 1ì¥ ê°€ì ¸ì˜¬ ë•Œ ë±ì´ ë¹„ì—ˆëŠ”ì§€ í™•ì¸í•˜ê³  ë¹„ì–´ìˆìœ¼ë©´ ì•„ë¬´ê²ƒë„ í•˜ì§€ ì•ŠëŠ”ë‹¤
+		// ê°€ì ¸ì˜¬ ê²½ìš° myDeckì—ì„œ ê°€ì ¸ì˜¨ ì¹´ë“œë¥¼ popí•œë‹¤.
+
+		srand(time(NULL));
+
+		if (this->myDeckEmpty()) {
+			return;		// ë±ì´ ë¹„ì–´ìˆìœ¼ë©´ ì•„ë¬´ê²ƒë„ í•˜ì§€ ì•Šê³  í•¨ìˆ˜ì¢…ë£Œ
+		}
+
+		Card myCard;
+		int randNum = rand() % this->myDeck.size();
+		list<Card>::iterator i = this->myDeck.begin();
+
+		for (int j = 0; j < randNum && (i != this->myDeck.end()); i++, j++);
+
+		myCard.fruit = i->fruit;
+		myCard.number = i->number;
+
+		this->myDeck.erase(i);
+
+		d->insertCard(myCard);		// ë±ì— ë‚˜ì˜ ë§¨ ì• ì¹´ë“œ ë¶™ì„
+
 	}
 
 	list<Card> oOups(int player_num) {
-		//ÇÃ·¡ÀÌ¾î°¡ ½Ç¼öÇÒ °æ¿ì¸¦ ÀÇ¹ÌÇÏ¸ç µ¦¿¡ player_num¸¸Å­ Ä«µå¸¦ •û¼­ ¸®ÅÏÇÏ´Â ¸Ş¼Òµå
-		// ¸¸¾à ÇÃ·¹ÀÌ¾î º¸´Ù Ä«µå °³¼ö°¡ ÀûÀ¸¸é, µ¦ ÀüÃ¼¸¦ ¸®ÅÏÇÏ°Ô²û ±¸Çö
+		//í”Œë˜ì´ì–´ê°€ ì‹¤ìˆ˜í•  ê²½ìš°ë¥¼ ì˜ë¯¸í•˜ë©° ë±ì— player_numë§Œí¼ ì¹´ë“œë¥¼ ëº´ì„œ ë¦¬í„´í•˜ëŠ” ë©”ì†Œë“œ
+		// ë§Œì•½ í”Œë ˆì´ì–´ ë³´ë‹¤ ì¹´ë“œ ê°œìˆ˜ê°€ ì ìœ¼ë©´, ë± ì „ì²´ë¥¼ ë¦¬í„´í•˜ê²Œë” êµ¬í˜„
 	}
-	
+
 private:
 	list<Card> myDeck;
 	list<Card>::iterator iter1 = myDeck.begin();
