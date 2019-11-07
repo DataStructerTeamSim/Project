@@ -32,10 +32,14 @@ int main() {
 		bool numbermatch = false;
 		bool playerinput = false;
 		list<Card> onTable;
-		do {//플레이어에게 턴을 제공
+		do {
+			if ((*iter)->myDeckEmpty())
+				continue;
 			giveTurnToPlayer(*iter, onTable);
+			//onTable에 있는 fruit, number 출력
 			numbermatch = numberMatch(onTable);
 			playerinput = playerInput(numbermatch);
+			//10퍼센트의 확률로 break -> 컴퓨터가 실수할 경우
 		} while (!numbermatch && !playerinput);
 
 		// *넘버는 맞았는데 플레이어 인풋이 없을 경우
@@ -54,6 +58,11 @@ int main() {
 		// * 넘버도 맞고 플레이어도 인풋도 있을 경우
 		if (numbermatch && playerinput) {
 			//플레이어에 onTable 리스트 주기
+		}
+
+		// * 컴퓨터가 실수할 경우
+		if (!numbermatch && !playerinput) {
+			// 
 		}
 
 
