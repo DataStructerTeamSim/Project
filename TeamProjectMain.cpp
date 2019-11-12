@@ -37,6 +37,32 @@ void giveTurnToPlayer(Player& player, list<Card>& onTable) {
 bool numberMatch(const list<Card>& onTable) {
 	//onTable에 있는 카드들의 fruit와 number를 매치하여 같은 fruit의 number합이 5면 true리턴
 	//없으면 false
+	int checkarr[4] = {0,0,0,0};
+	list<Card>::iterator it;
+	it = onTable.begin;
+	for (size_t i = 0; i < 4; i++)
+	{
+		switch (it->fruit)
+		{
+		case 0:
+			checkarr[0] += it->number;
+		case 1:
+			checkarr[1] += it->number;
+		case 2:
+			checkarr[2] += it->number;
+		case 3:
+			checkarr[3] += it->number;
+		default:
+			break;
+		}
+		it++;
+	}
+	for (size_t i = 0; i < 4; i++)
+	{
+		if (checkarr[i] == 5)
+			return true;
+	}
+	return false;
 }
 bool playerInput(bool match) {
 	//player의 cin을 받음
@@ -45,7 +71,7 @@ bool playerInput(bool match) {
 	//match가 false일 경우 2초만큼 대기
 	//만일 2초 안에 player가 입력을 했다면 true리턴
 	//2초가 넘아갈 동안 입력 x 시 false 리턴
-	clock_t endwait;
+	clock_t endwaitT,endwaitF;
 	endwaitT = clock() + COMPUTERWAIT * CLOCKS_PER_SEC;
 	endwaitF = clock() + (COMPUTERWAIT + 1)*CLOCKS_PER_SEC;
 	if (match == true)
@@ -54,7 +80,7 @@ bool playerInput(bool match) {
 		{
 			if (kbhit())
 			{
-				
+
 			}
 		}
 		return true;
