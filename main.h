@@ -1,24 +1,27 @@
 #include <iostream>
 #include <list>
+#include <vector>
+#include <time.h>
 
+#define COMPUTERNUM 3
 #define GRAPE 0 
 #define STRAWBERRY 1
 #define BANANA 2
 #define APPLE 3
 #define COMPUTERWAIT 1
-// °úÀÏ Á¤ÀÇ
+// ê³¼ì¼ ì •ì˜
 using namespace std;
 
-//Ä«µå struct Á¤ÀÇ, fruit => °úÀÏÀÇ Á¤º¸ | number => °úÀÏÀÇ °³¼ö
+//ì¹´ë“œ struct ì •ì˜, fruit => ê³¼ì¼ì˜ ì •ë³´ | number => ê³¼ì¼ì˜ ê°œìˆ˜
 typedef struct __Card {
 	int fruit;
 	int number;
 }Card;
 
-//°úÀÏ¸¶´Ù Ä«µå°ª ÀúÀåÇÏ´Â ¹è¿­
+//ê³¼ì¼ë§ˆë‹¤ ì¹´ë“œê°’ ì €ì¥í•˜ëŠ” ë°°ì—´
 Card grape[14]; Card strawberry[14]; Card banana[14]; Card apple[14];
 
-//Ä«µå ¼³Á¤, ÇØ´ç Ä«µå¿¡ 1:5°³, 2:3°³, 3:3°³, 4:2°³, 5:1°³¾¿ number¿¡ ÇÒ´çÇÏ´Â ¸Ş¼Òµå
+//ì¹´ë“œ ì„¤ì •, í•´ë‹¹ ì¹´ë“œì— 1:5ê°œ, 2:3ê°œ, 3:3ê°œ, 4:2ê°œ, 5:1ê°œì”© numberì— í• ë‹¹í•˜ëŠ” ë©”ì†Œë“œ
 void setCard(Card *card, int fruitType) {
 	for (int i = 0; i < 14; i++) {
 		card[i].fruit = fruitType;
@@ -35,7 +38,7 @@ void setCard(Card *card, int fruitType) {
 	}
 }
 
-//¸ğµç °úÀÏÄ«µå¿¡ ¼ıÀÚ ¹× °úÀÏ ÇÒ´ç ¸Ş¼Òµå
+//ëª¨ë“  ê³¼ì¼ì¹´ë“œì— ìˆ«ì ë° ê³¼ì¼ í• ë‹¹ ë©”ì†Œë“œ
 void realSetCard() {
 	setCard(grape, GRAPE);
 	setCard(strawberry, STRAWBERRY);
