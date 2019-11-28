@@ -2,6 +2,7 @@
 #include <list>
 #include <vector>
 #include <time.h>
+#include <string>
 
 #define COMPUTERNUM 3
 #define GRAPE 0 
@@ -45,4 +46,5 @@ void realSetCard() {
 	setCard(banana, BANANA);
 	setCard(apple, APPLE);
 }
+
 
