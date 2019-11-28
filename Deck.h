@@ -22,19 +22,45 @@ public:
 
 	void setDeck_Card() {
 		//과일 카드들을 deck_Card에 붙여서 넣기
+		for (int i = 0; i < 56; i++) {
+			if (i >= 0 && i < 14)
+				deck_Card[i] = grape[i];
+			else if (i >= 14 && i < 28)
+				deck_Card[i] = strawberry[i - 14];
+			else if (i >= 28 && i < 42)
+				deck_Card[i] = banana[i - 28];
+			else
+				deck_Card[i] = apple[i - 42];
+		}
 	}
 	void shuffle_Deck_Card() {
 		//Deck_Card들의 배열을 랜덤하게 섞기
+		srand(time(NULL));
+		Card temp;
+		int rn;
+		for (int i = 0; i < 55; i++) {
+			rn = rand() % (56 - i) + i;
+			temp = deck_Card[i];
+			deck_Card[i] = deck_Card[rn];
+			deck_Card[rn] = temp;
+		}
 	}
 	list<Card> giveCardToPlayer() {
 		//플레이어에게 제공할 카드 14장 list를 리턴하는 메소드
 		//줄 때마다 덱에서 14장 제거해야 된다.
+		list<Card> givePlayerDeck;
+		iter1 = this->deck_List.begin();
+		iter2 = this->deck_List.begin();
+		for (int i = 0; i < 14; i++)
+			iter2++;
+		givePlayerDeck.splice(givePlayerDeck.begin(),deck_List, iter1, iter2);
+		return givePlayerDeck;
 	}
 
 	//deck에 섞여 있는 카드 보기
 	void printAllCard() {
 		for (iter1 = deck_List.begin(); iter1 != deck_List.end(); iter1++) {
-			cout << (*iter1).fruit << " " << (*iter1).number << endl;
+			cout << (*iter1).fruit << " " << (*iter1).number << "   ";
 		}
 	}
 
