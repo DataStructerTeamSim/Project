@@ -35,11 +35,15 @@ void setCard(Card *card, int fruitType) {
 	}
 }
 
+
+	
+
 //모든 과일카드에 숫자 및 과일 할당 메소드
 void realSetCard() {
 	setCard(grape, GRAPE);
 	setCard(strawberry, STRAWBERRY);
 	setCard(banana, BANANA);
 	setCard(apple, APPLE);
+
 }
 
