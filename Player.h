@@ -42,7 +42,19 @@ public:
 			this->myDeck.pop_front();
 		}
 	}
-
+	Player operator=(const Player &p)
+	{
+		if (this != &p)
+		{
+			this->myDeck = p.myDeck;
+			this->frontCard = p.frontCard;
+			this->iter1 = p.iter1;
+			this->iter2 = p.iter2;
+			this->frontCard = p.frontCard;
+			this->loseOrWin = p.loseOrWin;
+		}
+		return *this;
+	}
 private:
 	list<Card> myDeck;
 	list<Card>::iterator iter1 = myDeck.begin();
