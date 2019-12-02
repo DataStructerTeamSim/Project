@@ -47,4 +47,74 @@ void realSetCard() {
 	setCard(apple, APPLE);
 }
 
-
+//그림으로 표현
+string* fruitPrint(Card k) {
+	string* print = new string[6];
+	string pf;
+	switch (k.fruit) {
+	case 0:
+		pf = "**";
+		break;
+	case 1:
+		pf = "$$";
+		break;
+	case 2:
+		pf = "OO";
+		break;
+	case 3:
+		pf = "XX";
+		break;
+	default:
+		pf = "  ";
+		break;
+	}
+	if (k.number == 1) {
+		print[0] = "      ";
+		print[1] = "      ";
+		print[2] = "  " + pf + "  ";
+		print[3] = "  " + pf + "  ";
+		print[4] = "      ";
+		print[5] = "      ";
+	}
+	else if (k.number == 2) {
+		print[0] = pf + "    ";
+		print[1] = pf + "    ";
+		print[2] = "      ";
+		print[3] = "      ";
+		print[4] = "    " + pf;
+		print[5] = "    " + pf;
+	}
+	else if (k.number == 3) {
+		print[0] = pf + "    ";
+		print[1] = pf + "    ";
+		print[2] = "  " + pf + "  ";
+		print[3] = "  " + pf + "  ";
+		print[4] = "    " + pf;
+		print[5] = "    " + pf;
+	}
+	else if (k.number == 4) {
+		print[0] = pf + "  " + pf;
+		print[1] = pf + "  " + pf;
+		print[2] = "      ";
+		print[3] = "      ";
+		print[4] = pf + "  " + pf;
+		print[5] = pf + "  " + pf;
+	}
+	else if (k.number == 5) {
+		print[0] = pf + "  " + pf;
+		print[1] = pf + "  " + pf;
+		print[2] = "  " + pf + "  ";
+		print[3] = "  " + pf + "  ";
+		print[4] = pf + "  " + pf;
+		print[5] = pf + "  " + pf;
+	}
+	else {
+		print[0] = "      ";
+		print[1] = "      ";
+		print[2] = "      ";
+		print[3] = "      ";
+		print[4] = "      ";
+		print[5] = "      ";
+	}
+	return print;
+}

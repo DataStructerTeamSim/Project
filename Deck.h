@@ -5,16 +5,17 @@
 class Deck {
 public:
 	Deck() {
+		deck_Card = new Card[56];
 		realSetCard(); // 전역변수 카드 배열 값 설정
-		setDeck_Card(); //다리아 구현
-		shuffle_Deck_Card(); // 다리아 구현
+		setDeck_Card(); //카드 값 설정 기본 배열
+		shuffle_Deck_Card(); // 카드 섞기 기본 배열
 
 		//Deck_Card 값을 list로 만드는 코드
-		for (Card a : deck_Card) {
-			deck_List.push_back(a);
+		for (int i = 0; i < 56;i++) {
+			deck_List.push_back(deck_Card[i]);
 		}
 	}
-	~Deck() { deck_List.clear(); }
+	~Deck() { deck_List.clear(); delete[] deck_Card; }
 
 	void insertCard(Card c) {	// 카드를 덱에 넣기 (추가된 부분)
 		deck_List.push_back(c);
@@ -63,9 +64,14 @@ public:
 			cout << (*iter1).fruit << " " << (*iter1).number << "   ";
 		}
 	}
+	void clear(){
+		delete[] deck_Card;
+		deck_List.clear();
+
+	}
 
 private:
-	Card deck_Card[56];
+	Card* deck_Card;
 	list<Card>deck_List;
 	list<Card>::iterator iter1;
 	list<Card>::iterator iter2;
