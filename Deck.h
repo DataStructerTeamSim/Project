@@ -1,62 +1,78 @@
 #include "main.h"
-#include<cstdlib>
-//main.h¿¡ ¼±¾ğµÈ °úÀÏ Ä«µå¸¦ »ç¿ëÇÏ¿© ·£´ıÇÏ°Ô ¼¯Àº ÈÄ list¿¡ ÀúÀåÇÏ´Â class
+
+//main.hì— ì„ ì–¸ëœ ê³¼ì¼ ì¹´ë“œë¥¼ ì‚¬ìš©í•˜ì—¬ ëœë¤í•˜ê²Œ ì„ì€ í›„ listì— ì €ì¥í•˜ëŠ” class
 
 class Deck {
 public:
-	
 	Deck() {
-		realSetCard(); // Àü¿ªº¯¼ö Ä«µå ¹è¿­ °ª ¼³Á¤
-		setDeck_Card(); //´Ù¸®¾Æ ±¸Çö
-		shuffle_Deck_Card(); // ´Ù¸®¾Æ ±¸Çö
-							 //Deck_Card °ªÀ» list·Î ¸¸µå´Â ÄÚµå
-		for (Card a : deck_Card) {
-			deck_List.push_back(a);
+		deck_Card = new Card[56];
+		realSetCard(); // ì „ì—­ë³€ìˆ˜ ì¹´ë“œ ë°°ì—´ ê°’ ì„¤ì •
+		setDeck_Card(); //ì¹´ë“œ ê°’ ì„¤ì • ê¸°ë³¸ ë°°ì—´
+		shuffle_Deck_Card(); // ì¹´ë“œ ì„ê¸° ê¸°ë³¸ ë°°ì—´
+
+		//Deck_Card ê°’ì„ listë¡œ ë§Œë“œëŠ” ì½”ë“œ
+		for (int i = 0; i < 56;i++) {
+			deck_List.push_back(deck_Card[i]);
 		}
 	}
-	~Deck() { deck_List.clear(); }
+	~Deck() { deck_List.clear(); delete[] deck_Card; }
+
+	void insertCard(Card c) {	// ì¹´ë“œë¥¼ ë±ì— ë„£ê¸° (ì¶”ê°€ëœ ë¶€ë¶„)
+		deck_List.push_back(c);
+	}
 
 	void setDeck_Card() {
-		//°úÀÏ Ä«µåµéÀ» deck_Card¿¡ ºÙ¿©¼­ ³Ö±â
-		copy(grape, grape + 14, deck_Card);//»ğÀÔ¿ë ¹è¿­¸¸µé±â
-		copy(banana, banana + 14, deck_Card + 14);
-		copy(strawberry, strawberry + 14, deck_Card + 28);
-		copy(apple, apple + 14, deck_Card + 42);
+		//ê³¼ì¼ ì¹´ë“œë“¤ì„ deck_Cardì— ë¶™ì—¬ì„œ ë„£ê¸°
+		for (int i = 0; i < 56; i++) {
+			if (i >= 0 && i < 14)
+				deck_Card[i] = grape[i];
+			else if (i >= 14 && i < 28)
+				deck_Card[i] = strawberry[i - 14];
+			else if (i >= 28 && i < 42)
+				deck_Card[i] = banana[i - 28];
+			else
+				deck_Card[i] = apple[i - 42];
+		}
 	}
 	void shuffle_Deck_Card() {
-		//Deck_CardµéÀÇ ¹è¿­À» ·£´ıÇÏ°Ô ¼¯±â
-		int temp;
-		Card save;
-		for (size_t i = 0; i < 56; i++)
-		{
-			temp = rand() % 56;
-			save = deck_Card[i];
-			deck_Card[i] = deck_Card[temp];
-			deck_Card[temp] = save;
+		//Deck_Cardë“¤ì˜ ë°°ì—´ì„ ëœë¤í•˜ê²Œ ì„ê¸°
+		srand((unsigned int)time(NULL));
+		Card temp;
+		int rn;
+		for (int i = 0; i < 55; i++) {
+			rn = rand() % (56 - i) + i;
+			temp = deck_Card[i];
+			deck_Card[i] = deck_Card[rn];
+			deck_Card[rn] = temp;
 		}
 	}
 	list<Card> giveCardToPlayer() {
-		//ÇÃ·¹ÀÌ¾î¿¡°Ô Á¦°øÇÒ Ä«µå 14Àå list¸¦ ¸®ÅÏÇÏ´Â ¸Ş¼Òµå
-		//ÁÙ ¶§¸¶´Ù µ¦¿¡¼­ 14Àå Á¦°ÅÇØ¾ß µÈ´Ù.
-		list<Card>playerDeck;
-		for (size_t i = 0; i < 14; i++)
-		{
-			playerDeck.push_back(deck_List.front());
-			deck_List.pop_front();
-		}
-		return playerDeck;
+		//í”Œë ˆì´ì–´ì—ê²Œ ì œê³µí•  ì¹´ë“œ 14ì¥ listë¥¼ ë¦¬í„´í•˜ëŠ” ë©”ì†Œë“œ
+		//ì¤„ ë•Œë§ˆë‹¤ ë±ì—ì„œ 14ì¥ ì œê±°í•´ì•¼ ëœë‹¤.
+		list<Card> givePlayerDeck;
+		iter1 = this->deck_List.begin();
+		iter2 = this->deck_List.begin();
+		for (int i = 0; i < 14; i++)
+			iter2++;
+		givePlayerDeck.splice(givePlayerDeck.begin(),deck_List, iter1, iter2);
+		return givePlayerDeck;
 	}
 
-	//deck¿¡ ¼¯¿© ÀÖ´Â Ä«µå º¸±â
+	//deckì— ì„ì—¬ ìˆëŠ” ì¹´ë“œ ë³´ê¸°
 	void printAllCard() {
 		for (iter1 = deck_List.begin(); iter1 != deck_List.end(); iter1++) {
-			cout << (*iter1).fruit << " " << (*iter1).number << endl;
+			cout << (*iter1).fruit << " " << (*iter1).number << "   ";
 		}
 	}
-	
+	void clear(){
+		delete[] deck_Card;
+		deck_List.clear();
+
+	}
+
 private:
-	Card deck_Card[56];
+	Card* deck_Card;
+	list<Card>deck_List;
 	list<Card>::iterator iter1;
 	list<Card>::iterator iter2;
-	list<Card>deck_List;
 };

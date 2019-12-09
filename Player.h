@@ -2,63 +2,144 @@
 
 class Player {
 public:
-	Player() {  }
+	Player() {}
 	~Player() { myDeck.clear(); }
-	void setMyDeck(const list<Card>& recive_From_Deck) {
-		//recive_From_Deck¿¡¼­ ¹ŞÀº Ä«µå ¹¶Ä¡¸¦ myDeck¿¡ ºÙÀÌ´Â ±â´É
-		list<Card> save(recive_From_Deck);
-		for (list<Card>::iterator i = save.begin(); i != save.end(); i++)
-		{
-			this->myDeck.push_back(*i);
-		}
+	void setMyDeck(list<Card> recive_From_Deck) {
+		//recive_From_Deckì—ì„œ ë°›ì€ ì¹´ë“œ ë­‰ì¹˜ë¥¼ myDeckì— ë¶™ì´ëŠ” ê¸°ëŠ¥
+		this->myDeck = recive_From_Deck;
 	}
-	
-	//playerÀÇ µ¦ÀÌ ºñ¾ú´ÂÁö È®ÀÎÇÏ´Â ¸Ş¼Òµå
+
+	void setImloose() {//íŒ¨ë°°í•  ê²½ìš° ì°¸ìœ¼ë¡œ ì„¤ì •
+		loseOrWin = true;
+	}
+	bool getImLoose() {//íŒ¨ë°°í–ˆëŠ”ì§€ ì•ˆí–ˆëŠ”ì§€ í™•ì¸
+		return loseOrWin;
+	}
+
+	void inputMyDeck(list<Card> recive_Card) {//ë±ì–´ ì¹´ë“œ ë¦¬ìŠ¤íŠ¸ë¥¼ ë¶™ì´ëŠ” ê²ƒ : ì´ê²¼ì„ ë–„ ì‚¬ìš©
+		list<Card>::iterator i, j;
+		i = recive_Card.begin();
+		j = recive_Card.end();
+		myDeck.insert(myDeck.end(), i, j);
+	}
+	void inputMyDeck(Card recive_Card) {//ë±ì— ì¹´ë“œë¥¼ ë¶™ì´ëŠ” ê²ƒ : ì‹¤ìˆ˜í–ˆì„ ë•Œ ì‚¬ìš©
+		myDeck.push_back(recive_Card);
+	}
+	void setMyName(string name) {//í”Œë ˆì´ì–´ì˜ ì´ë¦„ ì„¤ì •
+		this->myName = name;
+	}
+	string getMyName() {//í”Œë ˆì´ì–´ì˜ ì´ë¦„ ë°˜í™˜
+		return myName;
+	}
+
+	//playerì˜ ë±ì´ ë¹„ì—ˆëŠ”ì§€ í™•ì¸í•˜ëŠ” ë©”ì†Œë“œ
 	bool myDeckEmpty() {
 		return myDeck.empty();
 	}
+	bool frontCardempty() {
+		return frontCard.empty();
+	}
 
-	//playerÀÇ Ã¹¹øÂ° Ä«µå ¹İÈ¯
+	//playerì˜ frontCard ì¹´ë“œ ë¦¬í„´ : ë³´ì—¬ì£¼ê¸° ìš©ë„
 	Card show_Front_Card() {
-		return this->frontCard;
+		return *frontCard.begin();
+	}
+
+	list<Card> get_Front_Card() {//í”„ëŸ°íŠ¸ ì¹´ë“œ ìì²´ë¥¼ ë°˜í™˜ : ì´ë–„ í”„ëŸ°íŠ¸ ì¹´ë“œëŠ” ë¹„ê²Œ ëœë‹¤.
+		list<Card> copy;
+		copy.splice(copy.end(),frontCard,frontCard.begin(), frontCard.end());
+		return copy;
+	}
+	int howManyCard() {//ì¹´ë“œ ìˆ«ì í™•ì¸ : Deck + frontCard
+		int frontCardNum = 0;
+		int myDeckNum = 0;
+		list<Card> ::iterator i1 = frontCard.begin();
+		list<Card> ::iterator i2 = myDeck.begin();
+		for (; i1 != frontCard.end(); i1++) {
+			frontCardNum++;
+		}
+		for (; i2 != myDeck.end(); i2++) {
+			myDeckNum++;
+		}
+		return frontCardNum + myDeckNum;
 	}
 
 	void myTurn() {
-		//myDeck¿¡¼­ Ä«µå 1ÀåÀ» °¡Á®¿Í¼­ frontCard¿¡ ³Ö´Â ±â´É
-		// 1Àå °¡Á®¿Ã ¶§ µ¦ÀÌ ºñ¾ú´ÂÁö È®ÀÎÇÏ°í ºñ¾îÀÖÀ¸¸é ¾Æ¹«°Íµµ ÇÏÁö ¾Ê´Â´Ù
-		// °¡Á®¿Ã °æ¿ì myDeck¿¡¼­ °¡Á®¿Â Ä«µå¸¦ popÇÑ´Ù.
-		if (this->myDeck.empty() == false)
-		{
-			frontCard = this->myDeck.front();
-			this->myDeck.pop_front();
+		// myDeckì—ì„œ ì¹´ë“œ 1ì¥ì„ ê°€ì ¸ì™€ì„œ frontCardì— ë„£ëŠ” ê¸°ëŠ¥
+		// 1ì¥ ê°€ì ¸ì˜¬ ë•Œ ë±ì´ ë¹„ì—ˆëŠ”ì§€ í™•ì¸í•˜ê³  ë¹„ì–´ìˆìœ¼ë©´ ì•„ë¬´ê²ƒë„ í•˜ì§€ ì•ŠëŠ”ë‹¤
+		// ê°€ì ¸ì˜¬ ê²½ìš° myDeckì—ì„œ ê°€ì ¸ì˜¨ ì¹´ë“œë¥¼ popí•œë‹¤.
+
+		srand((unsigned int)time(NULL));
+
+		if (this->myDeckEmpty()) {
+			return;		// ë±ì´ ë¹„ì–´ìˆìœ¼ë©´ ì•„ë¬´ê²ƒë„ í•˜ì§€ ì•Šê³  í•¨ìˆ˜ì¢…ë£Œ
 		}
+
+		Card myCard;
+		//ë±ì— ëœë¤ìœ¼ë¡œ ì¹´ë“œ ë½‘ê¸°
+		int randNum = rand() % this->myDeck.size();
+		list<Card>::iterator i = this->myDeck.begin();
+
+		for (int j = 0; j < randNum && (i != this->myDeck.end()); i++, j++);
+
+		myCard = *i;
+		this->myDeck.erase(i);
+
+		frontCard.push_front(myCard);	// ë±ì— ë‚˜ì˜ ë§¨ ì• ì¹´ë“œ ë¶™ì„
+
+	}
+
+	void showMyCard() {//ë³¸ì¸ì´ ê°€ì§„ ì¹´ë“œë¥¼ ë³´ì—¬ì¤Œ : ì½”ë“œ í™•ì¸ìš©, ì‹¤ì „X
+		cout << "My Front Cards" << endl;
+		list<Card> ::iterator i1 = frontCard.begin();
+		list<Card> ::iterator i2 = myDeck.begin();
+		for (; i1 != frontCard.end(); i1++) {
+			cout << i1->fruit << "," << i1->number << "   ";
+		}
+		cout << endl;
+		cout << "My Deck Cards" << endl;
+		for (; i2 != myDeck.end(); i2++) {
+			cout << i2->fruit << "," << i2->number << "   ";
+		}
+		cout << endl;
 	}
 
 	list<Card> oOups(int player_num) {
-		//ÇÃ·¡ÀÌ¾î°¡ ½Ç¼öÇÒ °æ¿ì¸¦ ÀÇ¹ÌÇÏ¸ç µ¦¿¡ player_num¸¸Å­ Ä«µå¸¦ •û¼­ ¸®ÅÏÇÏ´Â ¸Ş¼Òµå
-		// ¸¸¾à ÇÃ·¹ÀÌ¾î º¸´Ù Ä«µå °³¼ö°¡ ÀûÀ¸¸é, µ¦ ÀüÃ¼¸¦ ¸®ÅÏÇÏ°Ô²û ±¸Çö
-		for (size_t i = 0; i < player_num; i++)
-		{
-			this->myDeck.pop_front();
+		//í”Œë˜ì´ì–´ê°€ ì‹¤ìˆ˜í•  ê²½ìš°ë¥¼ ì˜ë¯¸í•˜ë©° ë±ì— player_numë§Œí¼ ì¹´ë“œë¥¼ ëº´ì„œ ë¦¬í„´í•˜ëŠ” ë©”ì†Œë“œ
+		//
+		// ë§Œì•½ í”Œë ˆì´ì–´ ë³´ë‹¤ ë± ì¹´ë“œ ê°œìˆ˜ê°€ ì ìœ¼ë©´, í”„ëŸ°íŠ¸ ì¹´ë“œì—ì„œ ê°€ì ¸ì˜´
+		list<Card> mistake;
+		if (myDeck.empty())
+			return mistake;
+		list<Card>::iterator iter1;
+		list<Card>::iterator iter2;
+		list<Card>::reverse_iterator riter1;
+		iter1 = myDeck.begin();
+		iter2 = mistake.begin();
+		int i = 0;
+		for (i = 0; i < player_num && iter1 != myDeck.end(); i++) {
+			mistake.push_back(*iter1);
+			this->myDeck.erase(iter1++);
 		}
+		for (riter1 = frontCard.rbegin(); i < player_num&&riter1 != frontCard.rend(); i++) {
+			mistake.push_back(*riter1);
+			this->frontCard.pop_back();
+		}
+		return mistake;
 	}
-	Player operator=(const Player &p)
-	{
-		if (this != &p)
-		{
-			this->myDeck = p.myDeck;
-			this->frontCard = p.frontCard;
-			this->iter1 = p.iter1;
-			this->iter2 = p.iter2;
-			this->frontCard = p.frontCard;
-			this->loseOrWin = p.loseOrWin;
-		}
-		return *this;
+
+	void rmFrontCard() {
+		frontCard.clear();
+	}
+	void clear() {
+		myDeck.clear();
+		frontCard.clear();
+		loseOrWin = false;
+		myName.clear();
 	}
 private:
 	list<Card> myDeck;
-	list<Card>::iterator iter1 = myDeck.begin();
-	list<Card>::iterator iter2;
-	Card frontCard;
-	bool loseOrWin = true;
+	list<Card> frontCard;
+	bool loseOrWin = false;
+	string myName;
 };
