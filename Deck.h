@@ -1,5 +1,5 @@
 #include "main.h"
-
+#include<stdlib.h>
 //main.h에 선언된 과일 카드를 사용하여 랜덤하게 섞은 후 list에 저장하는 class
 
 class Deck {

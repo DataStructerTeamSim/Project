@@ -1,6 +1,9 @@
 #include "Player.h"
-#include <windows.h>
+#include <unistd.h>
 #include <iomanip>
+#include "linux-kbhit.h"
+#include "stdio.h"
+#include <signal.h>
 
 void giveTurnToPlayer(Player* player);
 bool numberMatch(vector<Player*> p);
@@ -11,6 +14,9 @@ void whoIsLose(vector<Player*>& p, int& playernum, vector<Player*>::iterator& it
 bool computerMistake();
 
 int difficult;
+
+
+
 
 int main() {
 	//덱 셔플
@@ -36,7 +42,7 @@ int main() {
 	player.setMyName("Player");
 	p.push_back(&player);
 	for (int i = 0; i < COMPUTERNUM; i++) {
-		computer[i].setMyName("computer " + to_string(i + 1));
+		computer[i].setMyName("computer " + std::to_string(i + 1));
 		p.push_back(&computer[i]);
 	}
 
@@ -59,7 +65,7 @@ int main() {
 		std::cin >> difficult;
 		if (difficult <= 3 && difficult > 0) {
 			std::cout << "You choose" << difficult << endl;
-			Sleep(2000);
+			sleep(2);
 			std::cin.clear();
 			std::cin.ignore(100, '\n');
 			break;
@@ -70,7 +76,7 @@ int main() {
 	}
 	while (1) {//전체적인 게임 진행 - 플래이어의 승패 결정
 		std::cout << "Start!" << endl;
-		Sleep(1000);
+		sleep(1);
 		bool numbermatch = false;
 		bool playerinput = false;
 
@@ -135,7 +141,7 @@ int main() {
 			}
 			clearFrontCard(p); //모든 플레이어의 frontCard 리스트 초기화
 			std::cout << (*com)->getMyName() << " is win the game" << endl;
-			Sleep(1000);
+			sleep(1);
 		}
 
 		// *넘버가 틀렷는데 플레이어 인풋이 있을 경우
@@ -158,7 +164,7 @@ int main() {
 				sendCom.pop_front();
 			}
 			std::cout << "player lose\n";
-			Sleep(1000);
+			sleep(1);
 		}
 
 		// * 넘버도 맞고 플레이어도 인풋도 있을 경우
@@ -171,7 +177,7 @@ int main() {
 			}
 			clearFrontCard(p);
 			std::cout << "player win\n";
-			Sleep(1000);
+			sleep(1);
 		}
 
 		// * 컴퓨터가 실수할 경우
@@ -202,11 +208,11 @@ int main() {
 				send.pop_front();
 			}
 			std::cout << (*com)->getMyName() << "'s mistake!" << endl;
-			Sleep(1000);
+			sleep(1);
 		}
 		whoIsLose(p, survieCom, iter); // 누가 졌는지 알려주기
 		std::cout << "you have " << (*p.begin())->howManyCard() << " Cards\n"; //플레이어의 남은 카드 수 반환 : frontCard + deckCard
-		Sleep(1000);
+		sleep(1);
 		if ((*p.begin())->myDeckEmpty() && (*p.begin())->frontCardempty()) {//플레이어의 남은 카드가 없을 경우 패배
 			std::cout << "You lose this game\n";
 			break;
@@ -222,7 +228,7 @@ int main() {
 	std::cin >> porout;
 	if (porout == 'y') {
 		std::cout << "Play again" << endl;
-		Sleep(1000);
+		sleep(1);
 	}
 	else {
 		std::cout << "out this game\n";
@@ -292,8 +298,9 @@ bool playerInput(bool match) {
 	{
 		while (clock() < endwaitT)
 		{
-			if (GetKeyState(VK_UP) < 0)
+			if (kbhit())
 			{
+                           
 				return true;
 			}
 		}
@@ -303,8 +310,11 @@ bool playerInput(bool match) {
 	{
 		while (clock() < endwaitF)
 		{
-			if (GetKeyState(VK_UP) < 0)
+			if (kbhit())
+                        {
+                          
 				return true;
+                        }
 		}
 		return false;
 	}
@@ -370,7 +380,7 @@ void whoIsLose(vector<Player*>& p, int& playernum, vector<Player*>::iterator& it
 			(*it)->setImloose();
 		}
 	}
-	Sleep(1000);
+	sleep(1);
 }
 bool computerMistake() { //컴퓨터 실수 확률 설정
 	srand((unsigned int)time(NULL));
