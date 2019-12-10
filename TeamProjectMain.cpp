@@ -300,8 +300,20 @@ bool playerInput(bool match) {
 		{
 			if (kbhit())
 			{
-                           
+                          if (keydown(UP)) 
 				return true;
+                           if (keydown(DOWN))
+                          {
+                            cout<<"stop"<<endl;
+                            cout<<"if you want start pleas press a"<<endl;        
+                            while(1){
+                            
+                            char a;
+                            std::cin>>a;
+                            if(a=='a')
+                              break;}
+
+                          }
 			}
 		}
 		return false;
@@ -312,8 +324,22 @@ bool playerInput(bool match) {
 		{
 			if (kbhit())
                         {
-                          
-				return true;
+                          if (keydown(UP))
+                        	return true;
+                            if (keydown(DOWN))
+                          {
+                            cout<<"stop"<<endl;
+                             cout<<"if you want start pleas press a"<<endl; 
+                             while(1){
+                            
+                            char a;
+                            std::cin>>a;
+                            if(a=='a')
+                              break;
+                            }
+
+                          }
+
                         }
 		}
 		return false;
@@ -390,3 +416,4 @@ bool computerMistake() { //컴퓨터 실수 확률 설정
 	else
 		return false;
 }
+
