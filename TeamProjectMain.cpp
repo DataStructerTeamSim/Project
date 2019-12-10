@@ -136,12 +136,16 @@ int main() {
 
 			//모든 플레이어 지목하는 iter:it
 			vector<Player*>::iterator it;
+                        int cardnum = 0;
 			for (it = p.begin(); it != p.end(); it++) {//frontCard의 list들을 이긴 컴퓨터 덱에 넣기
+                                if((*com)!=*it){cardnum +=(*it)->get_front_size();}
 				(*com)->inputMyDeck((*it)->get_Front_Card());
 			}
 			clearFrontCard(p); //모든 플레이어의 frontCard 리스트 초기화
 			std::cout << (*com)->getMyName() << " is win the game" << endl;
 			sleep(1);
+                        std::cout<<(*com)->getMyName()<<" get "<<cardnum<<"card"<<endl;
+                        sleep(1);
 		}
 
 		// *넘버가 틀렷는데 플레이어 인풋이 있을 경우
@@ -163,7 +167,9 @@ int main() {
 				(*it)->inputMyDeck(sendCom.front()); //컴퓨터에게 카드 제공
 				sendCom.pop_front();
 			}
-			std::cout << "player lose\n";
+                        std::cout<<"Your mistake\n";
+                        sleep(1);
+			std::cout<<"You lose"<< survieCom <<" cards\n";
 			sleep(1);
 		}
 
@@ -172,12 +178,17 @@ int main() {
 			//플레이어에 모든 frontCard제공
 			//컴퓨터가 맞았을 경우와 똑같음
 			vector<Player*>::iterator iter;
+                        int cardnum = 0;
 			for (iter = p.begin(); iter != p.end(); iter++) {
+                        if(*iter != p[0])
+                            cardnum +=(*iter)->get_front_size();
 				(*p.begin())->inputMyDeck((*iter)->get_Front_Card());
 			}
 			clearFrontCard(p);
 			std::cout << "player win\n";
 			sleep(1);
+                        std::cout<<"You get "<< cardnum<<" cards"<<endl;
+                        sleep(1);
 		}
 
 		// * 컴퓨터가 실수할 경우
@@ -209,6 +220,10 @@ int main() {
 			}
 			std::cout << (*com)->getMyName() << "'s mistake!" << endl;
 			sleep(1);
+                        cout<<(*com)->getMyName()<<" lose"<<survieCom<<" caeds"<<endl;
+                       sleep(1);
+                       std::cout<<"You get 1 card\n";
+                       sleep(1);
 		}
 		whoIsLose(p, survieCom, iter); // 누가 졌는지 알려주기
 		std::cout << "you have " << (*p.begin())->howManyCard() << " Cards\n"; //플레이어의 남은 카드 수 반환 : frontCard + deckCard
