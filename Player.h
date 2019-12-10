@@ -16,6 +16,10 @@ public:
 		return loseOrWin;
 	}
 
+	int get_front_size() {
+		return this->frontCard.size();
+	}
+
 	void inputMyDeck(list<Card> recive_Card) {//덱어 카드 리스트를 붙이는 것 : 이겼을 떄 사용
 		list<Card>::iterator i, j;
 		i = recive_Card.begin();
@@ -51,17 +55,8 @@ public:
 		return copy;
 	}
 	int howManyCard() {//카드 숫자 확인 : Deck + frontCard
-		int frontCardNum = 0;
-		int myDeckNum = 0;
-		list<Card> ::iterator i1 = frontCard.begin();
-		list<Card> ::iterator i2 = myDeck.begin();
-		for (; i1 != frontCard.end(); i1++) {
-			frontCardNum++;
-		}
-		for (; i2 != myDeck.end(); i2++) {
-			myDeckNum++;
-		}
-		return frontCardNum + myDeckNum;
+		
+		return this->frontCard.size() + myDeck.size();
 	}
 
 	void myTurn() {
@@ -112,10 +107,8 @@ public:
 		if (myDeck.empty())
 			return mistake;
 		list<Card>::iterator iter1;
-		list<Card>::iterator iter2;
 		list<Card>::reverse_iterator riter1;
 		iter1 = myDeck.begin();
-		iter2 = mistake.begin();
 		int i = 0;
 		for (i = 0; i < player_num && iter1 != myDeck.end(); i++) {
 			mistake.push_back(*iter1);
