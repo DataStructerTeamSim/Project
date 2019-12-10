@@ -133,11 +133,15 @@ int main() {
 
 			//모든 플레이어 지목하는 iter:it
 			vector<Player*>::iterator it;
+			int cardnum = 0;
 			for (it = p.begin(); it != p.end(); it++) {//frontCard의 list들을 이긴 컴퓨터 덱에 넣기
+				if((*com)!=*it){ cardnum += (*it)->get_front_size(); }
 				(*com)->inputMyDeck((*it)->get_Front_Card());
 			}
 			clearFrontCard(p); //모든 플레이어의 frontCard 리스트 초기화
 			cout << (*com)->getMyName() << " is win the game" << endl;
+			Sleep(1000);
+			cout << (*com)->getMyName() << " get " << cardnum << " cards" << endl;
 			Sleep(1000);
 		}
 
@@ -160,7 +164,9 @@ int main() {
 				(*it)->inputMyDeck(sendCom.front()); //컴퓨터에게 카드 제공
 				sendCom.pop_front();
 			}
-			cout << "player lose\n";
+			cout << "Your mistake\n";
+			Sleep(1000);
+			cout << "You lose " << survieCom << " cards\n";
 			Sleep(1000);
 		}
 
@@ -169,11 +175,16 @@ int main() {
 			//플레이어에 모든 frontCard제공
 			//컴퓨터가 맞았을 경우와 똑같음
 			vector<Player*>::iterator iter;
+			int cardnum = 0;
 			for (iter = p.begin(); iter != p.end(); iter++) {
+				if (*iter != p[0])
+					cardnum += (*iter)->get_front_size();
 				(*p.begin())->inputMyDeck((*iter)->get_Front_Card());
 			}
 			clearFrontCard(p);
 			cout << "player win\n";
+			Sleep(1000);
+			cout << "You get " << cardnum << " cards" << endl;
 			Sleep(1000);
 		}
 
@@ -205,6 +216,10 @@ int main() {
 				send.pop_front();
 			}
 			cout << (*com)->getMyName() << "'s mistake!" << endl;
+			Sleep(1000);
+			cout << (*com)->getMyName() << " lose " << survieCom << " cards" << endl;
+			Sleep(1000);
+			cout << "You get 1 card\n";
 			Sleep(1000);
 		}
 		whoIsLose(p, survieCom, iter); // 누가 졌는지 알려주기
@@ -299,6 +314,12 @@ bool playerInput(bool match) {
 			{
 				return true;
 			}
+			if (GetKeyState(VK_DOWN) < 0) {
+				while (1) {
+					if (GetKeyState(VK_LEFT) < 0)
+						break;
+				}
+			}
 		}
 		return false;
 	}
@@ -308,6 +329,12 @@ bool playerInput(bool match) {
 		{
 			if (GetKeyState(VK_UP) < 0)
 				return true;
+			if (GetKeyState(VK_DOWN) < 0) { // 방향키 아래를 누르면 대기
+				while (1) {
+					if (GetKeyState(VK_LEFT) < 0)//왼쪽을 누를 경우 브레이크
+						break;
+				}
+			}
 		}
 		return false;
 	}
